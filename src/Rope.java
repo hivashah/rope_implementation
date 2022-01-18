@@ -30,6 +30,34 @@ public class Rope {
         ropes.add(root);
     }
 
+
+    public static char index(RopeNode node,int i){
+        if (node.value <= i && node.right!=null){
+            return index(node.right, i - node.value);
+        }
+        if (node.left!=null) {
+            return index(node.left, i);
+        }
+        return node.data.charAt(i);
+    }
+
+
+    //bug full
+    void printLeafNodes(RopeNode root) {
+
+        if (root.left == null && root.right == null) {
+//            System.out.print(root.data);
+//            return;
+//        }
+        if (root.left != null){
+            printLeafNodes(root.left);
+        }
+        if (root.right != null){
+            return printLeafNodes(root.right);
+        }
+    }
+
+
     public static void main(String[] args) {
         Rope rope = new Rope();
         rope.add("hiva");
