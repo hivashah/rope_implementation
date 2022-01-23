@@ -72,9 +72,13 @@ public class Rope {
 
     public static RopeNode concat(RopeNode ropeNode1 , RopeNode ropeNode2){
         RopeNode newRoot = new RopeNode();
-        newRoot.value = ropeNode1.value;
+        newRoot.value = ropeNode1.value+ropeNode1.right.value;
         newRoot.left = ropeNode1;
         newRoot.right = ropeNode2;
+        int x= ropes.indexOf(ropeNode1);//finding the index of first string
+        ropes.add(x,newRoot);//add the new string in proper place
+        ropes.remove(x+1);//remove the first string
+        ropes.remove(ropeNode2);// remove the second string
         return newRoot;
     }
 
@@ -88,20 +92,23 @@ public class Rope {
         return node;
     }
 
-        public static void main (String[]args){
-            Rope rope = new Rope();
-            rope.add("Hiva");
-            Rope rope1 = new Rope();
-            rope1.add("Mehran");
-            System.out.println(concat(rope.root,rope1.root).data);
+    public static void main (String[]args){
+        Rope rope = new Rope();
+        rope.add("Hiva");
+        Rope rope1 = new Rope();
+        rope1.add("Mehran");
+        status();
+        System.out.println("---------------------------1");
+        System.out.println(index(ropes.get(0),3));
+        System.out.println(index(ropes.get(1),3));
+        status();
+        System.out.println("---------------------------2");
+        concat(ropes.get(0),ropes.get(1));
 
-            System.out.println(index(rope.root , 5));
-            System.out.println(search(rope.root,5));
+        status();
+        System.out.println("---------------------------3");
 
-//            System.out.println(ropes.get(1).value);
-//            System.out.println(ropes.get(1).data);
-
-
-        }
 
     }
+
+}
