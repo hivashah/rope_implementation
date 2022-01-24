@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Stack;
 
 public class Rope {
     static ArrayList<RopeNode> ropes = new ArrayList<>();
@@ -91,7 +93,39 @@ public class Rope {
         }
         return node;
     }
+    public static int getIndexInANode(RopeNode root, int i ) {
+        int count=0;
+        int res=0;
+        ArrayList<Integer> saveNodeValue = new ArrayList<>();
+        Stack<RopeNode> stack = new Stack<>();
+        stack.push(root);
+        while (!stack.isEmpty() ) {
+            RopeNode node = stack.pop();
+            if (node.left != null) {
+                stack.add(node.left);
+            }
+            if (node.right != null) {
+                stack.add(node.right);
+            } if (isLeaf(node)) {
+                saveNodeValue.add(node.value);
+            }
+        }
 
+        Collections.reverse(saveNodeValue);
+        for (int j = 0; j < saveNodeValue.size() ; j++) {
+            if (count+saveNodeValue.get(j)<i) {
+                count += saveNodeValue.get(j);
+            }else {
+                break;
+            }
+        }
+        return res;
+    }
+    static boolean isLeaf(RopeNode ropeNode) {
+       if (ropeNode.right!=null||ropeNode.left==null)
+           return true;
+       else return false;
+    }
     public static void main (String[]args){
         Rope rope = new Rope();
         rope.add("Hiva");
