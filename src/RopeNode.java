@@ -25,5 +25,8 @@ class RopeNode {
         value = 0;
     }
 
+    boolean isLeaf() { return left == null ? right == null : false; }
+
+
 
 }

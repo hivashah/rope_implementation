@@ -93,8 +93,9 @@ public class Rope {
         }
         return node;
     }
+
     public static int getIndexInANode(RopeNode root, int i ) {
-        int count=0;
+        int count = 0;
         int res=0;
         ArrayList<Integer> saveNodeValue = new ArrayList<>();
         Stack<RopeNode> stack = new Stack<>();
@@ -106,7 +107,8 @@ public class Rope {
             }
             if (node.right != null) {
                 stack.add(node.right);
-            } if (isLeaf(node)) {
+            } if (node.isLeaf()) {
+//                System.out.print(node.value);
                 saveNodeValue.add(node.value);
             }
         }
@@ -119,13 +121,11 @@ public class Rope {
                 break;
             }
         }
+        res = i-count ;
         return res;
     }
-    static boolean isLeaf(RopeNode ropeNode) {
-       if (ropeNode.right!=null||ropeNode.left==null)
-           return true;
-       else return false;
-    }
+
+
     public static void main (String[]args){
         Rope rope = new Rope();
         rope.add("Hiva");
