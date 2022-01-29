@@ -6,7 +6,7 @@ import java.util.Stack;
 public class Rope {
     static ArrayList<RopeNode> ropes = new ArrayList<>();
     RopeNode root = new RopeNode();
-
+    public static boolean splitNeed = true;
     public void structRoop(String str) {
 
         RopeNode nptr = new RopeNode(str);
@@ -224,7 +224,15 @@ public class Rope {
         newRoot.right = ropeNode2;
         return newRoot;
     }
-
+    public static void insert(RopeNode ropeNode1, RopeNode ropeNode2, int i){
+        splitNeed=false;
+        int x = ropes.indexOf(ropeNode1);
+        int y = ropes.indexOf(ropeNode2);
+        ArrayList<RopeNode> ropeNodes = split(search(ropeNode1,i),i,ropeNode1);
+        ropes.add(x, concatInMethod(concatInMethod(ropeNodes.get(0),ropeNode2),ropeNodes.get(1)));
+        ropes.remove(ropeNode2);
+        splitNeed=true;
+    }
 
 
     public static void main (String[]args){
