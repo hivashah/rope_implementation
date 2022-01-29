@@ -125,146 +125,105 @@ public class Rope {
         return res;
     }
 
-//    public static ArrayList<RopeNode> split(RopeNode root , int i , RopeNode realRoot){
-//        ArrayList<RopeNode>nodes=new ArrayList<>();
-//        RopeNode firstStringRoot=new RopeNode();
-//
-//        int positionInNode=getIndexInANode(realRoot,i);
-//
-//        RopeNode temp = realRoot ;
-//        if (positionInNode==root.data.length()){
-//            if(realRoot.right==root){
-//                firstStringRoot = temp.left ;
-//                temp.left = null ;
-//                ropes.add(firstStringRoot);
-//                temp.value -= firstStringRoot.value;
-//                ropes.remove(realRoot);
-//                ropes.add(realRoot);
-//            }
-//            System.out.println("akhareshe");
-//            while (temp.left != null){
-//
-//                if (temp.left.right==root){
-//                    firstStringRoot = temp.left ;
-//                    temp.left = null ;
-//
-//                    ropes.add(firstStringRoot);
-//
-//                    temp.value -= firstStringRoot.value;
-//
-//                    ropes.remove(realRoot);
-//                    ropes.add(realRoot);
-//                    break;
-//                }else {
-//                    temp = temp.left;
-//                }
-//            }
-//        }else {
-//            if (realRoot.right == root) {
-//                RopeNode ropeNodeL = new RopeNode();
-//                RopeNode ropeNodeR = new RopeNode();
-//                System.out.println(root.data+"shah");
-//                ropeNodeL.data = root.data.substring(0, positionInNode);
-//                ropeNodeL.value = root.data.substring(0, positionInNode).length();
-//                ropeNodeR.data = root.data.substring(positionInNode, root.data.length());
-//                ropeNodeR.value = root.data.substring(positionInNode, root.data.length()).length();
-//                firstStringRoot = temp.left;
-//                temp.left = null;
-//                temp.right = null;
-//                firstStringRoot = concatInMethod(firstStringRoot, ropeNodeL);
-//
-//                ropes.add(firstStringRoot);
-//                temp.value -= firstStringRoot.value;
-//                ropes.remove(realRoot);
-//                realRoot = concatInMethod(ropeNodeR, realRoot);
-//                ropes.add(realRoot);
-//
-//            }
-//
-//            RopeNode ropeNodeL = new RopeNode();
-//            RopeNode ropeNodeR = new RopeNode();
-//
-//            System.out.println(positionInNode+"adad");
-//            ropeNodeL.data = root.data.substring(0,positionInNode);
-//            ropeNodeL.value = root.data.substring(0,positionInNode).length();
-//
-//            ropeNodeR.data = root.data.substring(positionInNode,root.data.length());
-//            ropeNodeR.value = root.data.substring(positionInNode,root.data.length()).length();
-//
-//
-//            while (temp.left != null){
-//
-//                if (temp.left.right==root){
-//                    firstStringRoot = temp.left ;
-//                    temp.left = null ;
-//                    firstStringRoot.right=null;
-//                    firstStringRoot = concatInMethod(firstStringRoot,ropeNodeL);
-//                    ropes.add(firstStringRoot);
-//
-//                    temp.value -= firstStringRoot.value;
-//
-//                    ropes.remove(realRoot);
-//                    realRoot = concatInMethod(ropeNodeR , realRoot);
-//                    ropes.add(realRoot);
-//                    break;
-//                }else {
-//                    temp = temp.left;
-//                }
-//            }
-//        }
-//        nodes.add(firstStringRoot);
-//        nodes.add(realRoot);
-//        return nodes;
-//    }
-
-
     public static ArrayList<RopeNode> splitInMethod(RopeNode realRoot , int index){
         ArrayList<RopeNode>nodes = new ArrayList<>();
         RopeNode appropriateNode = search(realRoot , index);
         RopeNode rightSplitedRopeRoot = new RopeNode();
         RopeNode temp1 = new RopeNode();
+        RopeNode rightProcessor = new RopeNode();
         RopeNode tmp = realRoot ;
+        int x = ropes.indexOf(realRoot);
+        ropes.remove(realRoot);
         int count = 0;
         int positionInNode = getIndexInANode(realRoot,index) ;
         boolean isTrue = false;
-        while (index!=0){
+        temp1 = rightSplitedRopeRoot;
+        while (tmp.right != search(realRoot, index)){
+            if (realRoot.right.right==search(realRoot, index)){
+                index = index - tmp.value;
+                tmp=tmp.right;
+                isTrue=true;
+                rightSplitedRopeRoot.right = tmp.right;
+                temp1 = rightSplitedRopeRoot;
+                break;
+            }
             if (index < tmp.value){
                 if (rightSplitedRopeRoot.right == null) {
                     rightSplitedRopeRoot.right = tmp.right;
+                    rightSplitedRopeRoot.left = new RopeNode();
                     temp1 = rightSplitedRopeRoot;
+                    temp1=temp1.left;
                 }
                 else {
+                    if (temp1.left!= null && temp1.left.right!=null) {
+                        temp1.value = temp1.left.value + temp1.left.right.value;
+                    }
+                    temp1.right = tmp.right;
+                    tmp.right=null;
                     temp1.left = new RopeNode();
                 }
                 if (tmp.left != null){
                     if (count==0) {
                         tmp = tmp.left;
                         realRoot = tmp;
+                    }else {
+                        rightProcessor=tmp ;
+                        tmp.right = null;
+                        rightProcessor.left.right=null;
+                        rightProcessor=rightProcessor.left.left;
+                        rightProcessor.left.right=null;
+                        break;
                     }
                 }
             }
             else {
+                count++;
                 index = index - tmp.value;
                 if (tmp.right != null){
                     tmp = tmp.right;
+                }else {
+                    break;
                 }
+
             }
         }
         RopeNode ropeNodeL = new RopeNode();
         RopeNode ropeNodeR = new RopeNode();
         if (positionInNode == appropriateNode.data.length()){
             realRoot = concatInMethod(realRoot , tmp.right);
+            tmp.right = null;
+        }else if(tmp.value - index==0){
+            if (isTrue){
+                rightSplitedRopeRoot.right = realRoot.right.right;
+                tmp.right = null;
+            }else {
+                rightSplitedRopeRoot = concatInMethod(tmp.right, rightSplitedRopeRoot);
+                tmp.right = null;
+            }
         }
         else {
             ropeNodeL.data = appropriateNode.data.substring(0,positionInNode);
+            ropeNodeL.value = appropriateNode.data.substring(0,positionInNode).length();
+            tmp.right = ropeNodeL;
             ropeNodeR.data = appropriateNode.data.substring(positionInNode,appropriateNode.data.length());
-            temp1.left = ropeNodeR;
+            ropeNodeR.value = appropriateNode.data.substring(positionInNode,appropriateNode.data.length()).length();
+            if (isTrue){
+                rightProcessor.right = ropeNodeR;
+                rightSplitedRopeRoot = rightProcessor;
+            }else {
+                temp1.left = ropeNodeR;
+            }
         }
         nodes.add(realRoot);
         nodes.add(rightSplitedRopeRoot);
 
+        if (splitNeed) {
+            ropes.add(x, realRoot);
+            ropes.add(x + 1, rightSplitedRopeRoot);
+        }
         return nodes;
     }
+
 
     public static RopeNode concatInMethod(RopeNode ropeNode1 , RopeNode ropeNode2){
         RopeNode newRoot = new RopeNode();
@@ -309,7 +268,8 @@ public class Rope {
 
         status();
         System.out.println("---------------------------3");
-
+        splitInMethod(ropes.get(0),4);
+        status();
 
     }
 
