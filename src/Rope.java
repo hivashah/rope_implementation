@@ -44,22 +44,21 @@ public class Rope {
     }
 
 
-    static void printLeafNodes(RopeNode root) {
-
-        if (root == null)
-            return;
-
-        if (root.left == null &&
-                root.right == null)
-        {
-            System.out.print(root.data);
+    public static void printLeafNodes(RopeNode root) {
+        if (root == null) {
             return;
         }
-        if (root.left != null&&root.right != null){
+        if (root.left == null && root.right == null) {
+            if (root.data!=null){  //ke null print nakone hey
+                System.out.print(root.data);
+                return;
+            }
+        }
+        if (root.left != null){
             printLeafNodes(root.left);}
-
-        if (root.right != null&&root.left != null){
-            printLeafNodes(root.right);}
+        if (root.right != null){
+            printLeafNodes(root.right);
+        }
     }
 
 
@@ -268,7 +267,7 @@ public class Rope {
 
         status();
         System.out.println("---------------------------3");
-        splitInMethod(ropes.get(0),4);
+        splitInMethod(ropes.get(0),3);
         status();
 
     }
