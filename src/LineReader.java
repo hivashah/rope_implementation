@@ -9,7 +9,7 @@ public class LineReader {
         String command = scanner.nextLine();
         while (!command.equals("+")) {
             String[] strings;
-            strings = command.trim().split("[ ]+");//split commands by space
+            strings = command.trim().split("[ ]+");// split commands by space
             if (command.equals("status")) {
                 Rope.status();
             } else if (command.startsWith("new")) {

@@ -2,12 +2,12 @@ public class Undo {
     public static int size = 0;
     public static String word = "";
     public static void undo() {
-        String lastCommand = LineReader.stack.peek();//getting the last command
+        String lastCommand = LineReader.stack.peek();// getting the last command
         String[] strings;
 
         strings = lastCommand.trim().split("[ ]+");
         LineReader.stack.pop();
-        //whatever the command is we do the opposite
+        // whatever the command is we do the opposite
         if (strings[0].equals("new")) {
             Rope.ropes.remove(Rope.ropes.size() - 1);
         } else if (strings[0].equals("split")) {
@@ -31,14 +31,12 @@ public class Undo {
         }
     }
 
-    public static void getSize(RopeNode root)//getting the size of the string by head ropeNode
-    {
+    public static void getSize(RopeNode root){ // getting the size of the string by head ropeNode
         if (root == null) {
             return;
         }
         if (root.left == null && root.right == null) {
-            if (root.data != null) {  //ke null print nakone hey
-//                System.out.print(root.data);
+            if (root.data != null) {  // ke null print nakone hey
                 size += root.data.length();
                 return;
             }
@@ -51,14 +49,12 @@ public class Undo {
         }
     }
 
-    public static void getString(RopeNode root)//getting the string by head ropeNode
-    {
+    public static void getString(RopeNode root){ // getting the string by head ropeNode
         if (root == null) {
             return;
         }
         if (root.left == null && root.right == null) {
-            if (root.data != null) {  //ke null print nakone hey
-//                System.out.print(root.data);
+            if (root.data != null) {  // ke null print nakone hey
                 word += root.data;
                 return;
             }
@@ -70,4 +66,5 @@ public class Undo {
             getString(root.right);
         }
     }
+
 }

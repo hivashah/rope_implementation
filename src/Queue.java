@@ -24,7 +24,7 @@ public class Queue {
     public static Node push(Node head, String d, int p){
         Node start = (head);
         Node temp = newNode(d, p);
-        if ((head).priority <p) //sorting by priority
+        if ((head).priority <p) // sorting by priority
         {
             temp.next = head;
             (head) = temp;

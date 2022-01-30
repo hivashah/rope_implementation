@@ -1,19 +1,17 @@
 class Stack {
 
     private class Node {
-
         String data;
         Node link;
-
     }
+
     Node top;
-    Stack()
-    {
+
+    Stack() {
         this.top = null;
     }
 
-    public void push(String x)
-    {
+    public void push(String x) {
         Node temp = new Node();
 
         if (temp == null) {
@@ -22,9 +20,7 @@ class Stack {
         }
 
         temp.data = x;
-
         temp.link = top;
-
         top = temp;
     }
 
@@ -33,8 +29,7 @@ class Stack {
         return top == null;
     }
 
-    public String peek()
-    {
+    public String peek() {
         if (!isEmpty()) {
             return top.data;
         }
@@ -44,8 +39,7 @@ class Stack {
         }
     }
 
-    public void pop()
-    {
+    public void pop() {
         if (top == null) {
             System.out.println("Stack is empty");
             return;
@@ -53,6 +47,5 @@ class Stack {
 
         top = (top).link;
     }
-
 
 }

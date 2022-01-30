@@ -1,4 +1,3 @@
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -27,34 +26,33 @@ public class Trie {
         }
 
         public void insert(String word) {
-            if (word == null) //there is no word to be added
-            {
+            if (word == null){ //there is no word to be added
                 System.out.println("invalid string");
                 return;
             }
             char firstChar = word.charAt(0);
             TrieNode child = children.get(firstChar);
-            if (child == null)//its our first char to be added
-            {
+            if (child == null){//its our first char to be added
                 child = new TrieNode(firstChar);
                 children.put(firstChar, child);
             }
-            if (word.length() > 1)
-                child.insert(word.substring(1));//recursive method for adding other chars
-            else
+            if (word.length() > 1) {
+                child.insert(word.substring(1)); //recursive method for adding other chars
+            }
+            else {
                 child.isWord = true;
+            }
         }
 
     }
 
-
-    public Trie(ArrayList<String> words)
-    {
+    public Trie(ArrayList<String> words) {
         root = new TrieNode();
-        for (int i=0;i< words.size();i++)
+        for (int i = 0; i < words.size(); i++) {
             root.insert(words.get(i));
-
+        }
     }
+
     public static ArrayList<String> insertFile(String name) throws IOException {
         ArrayList<String> words = new ArrayList<>();
         File file = new File(
@@ -69,8 +67,8 @@ public class Trie {
     }
 
 
-    public void writeFile(String name)//to creat a file in case we wanted to have new Trie with new words
-    {
+    public void writeFile(String name){ //to creat a file in case we wanted to have new Trie with new words
+
         try {
             File myObj = new File(name);
             if (myObj.createNewFile()) {
@@ -84,8 +82,7 @@ public class Trie {
         }
     }
 
-    public static RopeNode findingRope(String s) //find rope by string
-    {
+    public static RopeNode findingRope(String s){ //find rope by string
         for (int i = 0; i < Rope.ropes.size(); i++) {
             if (Rope.ropes.get(i).right.data.equals(s)) {
                 return Rope.ropes.get(i);
@@ -94,8 +91,7 @@ public class Trie {
         return null;
     }
 
-    public static ArrayList<String> suggest(String prefix) //returms an arraylist with all suggested words
-    {
+    public static ArrayList<String> suggest(String prefix){ //returms an arraylist with all suggested words
         ArrayList<String> list = new ArrayList<>();
         TrieNode lastNode = root;
         String curr = new String();
@@ -119,7 +115,6 @@ public class Trie {
             suggestByRoot(child, list, curr + (child.aChar));
         }
     }
-
 
     public static void autocomplete(String s) throws IOException {
         ArrayList<String> words = new ArrayList<>();
@@ -162,6 +157,7 @@ public class Trie {
                 break;
         }
     }
+
     public static ArrayList<String> sort(ArrayList<String> su) {
         ArrayList<String> arr = new ArrayList<>();
         if (findingRope(su.get(0)) != null) //check if the suggestion have been chosen before
@@ -184,7 +180,7 @@ public class Trie {
                 }
             }
         } else {
-            Node node = queue.newNode(su.get(0), 0);//the word has never been selected
+            Node node = queue.newNode(su.get(0), 0);// the word has never been selected
             if (su.size() > 1) {
                 for (int i = 1; i < su.size(); i++) {
                     node = queue.push(node, su.get(i), 0);

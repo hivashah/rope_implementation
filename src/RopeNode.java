@@ -2,7 +2,7 @@ public class RopeNode {
     int value;
     String data;
     RopeNode left, right;
-    public  int countSuggestions=0;
+    public  int countSuggestions=0; // This field is used in our sort method and our priority Queue.
 
     public RopeNode(int key, String data, RopeNode left, RopeNode right) {
         this.value = key;
@@ -25,7 +25,9 @@ public class RopeNode {
         value = 0;
     }
 
-    boolean isLeaf() { return left == null ? right == null : false; }
+    boolean isLeaf() {
+        return left == null ? right == null : false;
+    }
 
 
 
