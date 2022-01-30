@@ -40,10 +40,15 @@ public class Trie {
                 child.isWord = true;
         }
 
-
     }
 
 
+    public Trie(ArrayList<String> words) {
+        root = new TrieNode();
+        for (String word : words)
+            root.insert(word);
+
+    }
     public static ArrayList<String> insertFile(String name) throws IOException {
         ArrayList<String> words = new ArrayList<>();
         File file = new File(
@@ -71,14 +76,37 @@ public class Trie {
             e.printStackTrace();
         }
     }
-
-
-    public Trie(ArrayList<String> words) {
-        root = new TrieNode();
-        for (String word : words)
-            root.insert(word);
-
+    public static RopeNode findingRope(String s) {
+        for (int i = 0; i < Rope.ropes.size(); i++) {
+            if (Rope.ropes.get(i).right.data.equals(s)) {
+                return Rope.ropes.get(i);
+            }
+        }
+        return null;
     }
 
+    public static ArrayList<String> suggest(String prefix) {
+        ArrayList<String> list = new ArrayList<>();
+        TrieNode lastNode = root;
+        String curr = new String();
+        for (int i = 0; i < prefix.length(); i++) {
+            lastNode = lastNode.children.get(prefix.charAt(i));
+            if (lastNode == null)
+                return list;
+            curr += prefix.charAt(i);
+        }
+        suggestByRoot(lastNode, list, curr);
+        return list;
+    }
 
+    public static void suggestByRoot(TrieNode root, ArrayList<String> list, String curr) {
+        if (root.isWord) {
+            list.add(curr.substring(0, curr.length()));
+        }
+        if (root.children == null)
+            return;
+        for (TrieNode child : root.children.values()) {
+            suggestByRoot(child, list, curr + (child.aChar));
+        }
+    }
 }
