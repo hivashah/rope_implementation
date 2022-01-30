@@ -1,14 +1,15 @@
+import java.io.IOException;
 import java.util.Scanner;
 
 public class LineReader {
     public static Stack stack = new Stack();
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         Scanner scanner = new Scanner(System.in);
         String command = scanner.nextLine();
         while (!command.equals("+")) {
             String[] strings;
-            strings = command.trim().split("[ ]+");
+            strings = command.trim().split("[ ]+");//split commands by space
             if (command.equals("status")) {
                 Rope.status();
             } else if (command.startsWith("new")) {
@@ -43,7 +44,12 @@ public class LineReader {
                 int j = Integer.parseInt(strings[3]);
                 Rope.delete(i,j,Rope.ropes.get(s),s);
             }
+            else if (strings[0].equals("autocomplete")){
+                Trie.autocomplete(strings[1]);
+
+            }
             command = scanner.nextLine();
         }
     }
 }
+

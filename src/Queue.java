@@ -24,7 +24,8 @@ public class Queue {
     public static Node push(Node head, String d, int p){
         Node start = (head);
         Node temp = newNode(d, p);
-        if ((head).priority <p) {
+        if ((head).priority <p) //sorting by priority
+        {
             temp.next = head;
             (head) = temp;
         }
@@ -43,7 +44,9 @@ public class Queue {
 
     static int isEmpty(Node head)
     {
-        return ((head) == null)?1:0;
+        if(head==null)
+            return 1;
+        else return 0;
     }
 
 

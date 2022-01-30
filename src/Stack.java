@@ -17,7 +17,7 @@ class Stack {
         Node temp = new Node();
 
         if (temp == null) {
-            System.out.print("\nHeap Overflow");
+            System.out.println("stack is full");
             return;
         }
 
@@ -47,7 +47,7 @@ class Stack {
     public void pop()
     {
         if (top == null) {
-            System.out.print("\nStack Underflow");
+            System.out.println("Stack is empty");
             return;
         }
 

@@ -254,26 +254,6 @@ public class Rope {
         splitNeed=true;
     }
 
-    public static void main (String[]args){
-        Rope rope = new Rope();
-        rope.add("Hiva");
-        Rope rope1 = new Rope();
-        rope1.add("Mehran");
-        status();
-        System.out.println("---------------------------1");
-        System.out.println(index(ropes.get(0),3));
-        System.out.println(index(ropes.get(1),3));
-        status();
-        System.out.println("---------------------------2");
-        concat(ropes.get(0),ropes.get(1));
-
-        status();
-        System.out.println("---------------------------3");
-        splitInMethod(ropes.get(0),3);
-        status();
-
-    }
-
 }
 
 
