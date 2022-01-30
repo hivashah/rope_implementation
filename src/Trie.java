@@ -9,6 +9,7 @@ import java.util.Scanner;
 
 public class Trie {
     public static TrieNode root;
+    public static Queue queue = new Queue();
 
     public class TrieNode {
         HashMap<Character, TrieNode> children;
@@ -113,12 +114,13 @@ public class Trie {
         }
     }
 
+
     public static void autocomplete(String s) throws IOException {
         ArrayList<String> words = new ArrayList<>();
         Scanner sc = new Scanner(System.in);
         words = insertFile("filename.txt");
         Trie trie = new Trie(words);
-        ArrayList<String> suggestions ;/*  =sort(suggest(s)); */  //a sort method should be implemented based on the priority queue.
+        ArrayList<String> suggestions = sort(suggest(s));
         int i = sc.nextInt();
         switch (i) {
             case 1:
@@ -154,8 +156,42 @@ public class Trie {
                 break;
         }
     }
-
-
-
-
+    public static ArrayList<String> sort(ArrayList<String> su) {
+        ArrayList<String> arr = new ArrayList<>();
+        if (findingRope(su.get(0)) != null) {
+            Node node = queue.newNode(su.get(0), findingRope(su.get(0)).countSuggestions);
+            if (su.size() > 1) {
+                for (int i = 1; i < su.size(); i++) {
+                    if (findingRope(su.get(i)) != null) {
+                        node = queue.push(node, su.get(i), findingRope(su.get(i)).countSuggestions);
+                    } else {
+                        node = queue.push(node, su.get(i), 0);
+                    }
+                }
+                for (int i = 0; i < 3; i++) {
+                    if (queue.isEmpty(node) == 0) {
+                        arr.add(queue.peek(node));
+                        node = queue.pop(node);
+                    }
+                }
+            }
+        } else {
+            Node node = queue.newNode(su.get(0), 0);
+            if (su.size() > 1) {
+                for (int i = 1; i < su.size(); i++) {
+                    node = queue.push(node, su.get(i), 0);
+                }
+            }
+            for (int i = 0; i < 3; i++) {
+                if (queue.isEmpty(node) == 0) {
+                    arr.add(queue.peek(node));
+                    node = queue.pop(node);
+                }
+            }
+        }
+        for (int i = 0; i < arr.size(); i++) {
+            System.out.println(i + 1 + " : " + arr.get(i));
+        }
+        return arr;
+    }
 }
