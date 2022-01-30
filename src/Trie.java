@@ -5,6 +5,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Scanner;
+
 public class Trie {
     public static TrieNode root;
 
@@ -76,6 +78,7 @@ public class Trie {
             e.printStackTrace();
         }
     }
+
     public static RopeNode findingRope(String s) {
         for (int i = 0; i < Rope.ropes.size(); i++) {
             if (Rope.ropes.get(i).right.data.equals(s)) {
@@ -109,4 +112,50 @@ public class Trie {
             suggestByRoot(child, list, curr + (child.aChar));
         }
     }
+
+    public static void autocomplete(String s) throws IOException {
+        ArrayList<String> words = new ArrayList<>();
+        Scanner sc = new Scanner(System.in);
+        words = insertFile("filename.txt");
+        Trie trie = new Trie(words);
+        ArrayList<String> suggestions ;/*  =sort(suggest(s)); */  //a sort method should be implemented based on the priority queue.
+        int i = sc.nextInt();
+        switch (i) {
+            case 1:
+                if (findingRope(suggestions.get(0)) != null) {
+                    findingRope(suggestions.get(0)).countSuggestions++;
+                } else {
+                    Rope rope = new Rope();
+                    rope.add(suggestions.get(0));
+                    rope.root.countSuggestions++;
+
+                }
+                break;
+            case 2:
+                if (findingRope(suggestions.get(1)) != null) {
+                    findingRope(suggestions.get(1)).countSuggestions++;
+
+                } else {
+                    Rope rope = new Rope();
+                    rope.add(suggestions.get(1));
+                    rope.root.countSuggestions++;
+
+                }
+                break;
+            case 3:
+                if (findingRope(suggestions.get(2)) != null) {
+                    findingRope(suggestions.get(2)).countSuggestions++;
+
+                } else {
+                    Rope rope = new Rope();
+                    rope.add(suggestions.get(2));
+                    rope.root.countSuggestions++;
+                }
+                break;
+        }
+    }
+
+
+
+
 }

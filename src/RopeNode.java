@@ -1,8 +1,8 @@
-class RopeNode {
+public class RopeNode {
     int value;
     String data;
     RopeNode left, right;
-
+    public  int countSuggestions=0;
 
     public RopeNode(int key, String data, RopeNode left, RopeNode right) {
         this.value = key;
